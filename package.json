@@ -1,0 +1,26 @@
+{
+  "name": "light-ng",
+  "version": "1.0.0",
+  "description": "A light framework that uses the same injector sintax as Angular.js (or Require.js). It was inspired by Angular, and uses the same sintax mostly",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lmaftuleac/light-ng.git"
+  },
+  "keywords": [
+    "light",
+    "ng",
+    "angular",
+    "similar",
+    "framework"
+  ],
+  "author": "Liviu Maftuleac",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lmaftuleac/light-ng/issues"
+  },
+  "homepage": "https://github.com/lmaftuleac/light-ng#readme"
+}
