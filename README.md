@@ -31,7 +31,7 @@ myApp.service('user', [function(){
 }]);
 ```
 
-when the app is ready, greet the user
+a `run` function will get executed when the app is ready
 
 ```
 myApp.run(['user',function(user){
@@ -41,7 +41,7 @@ myApp.run(['user',function(user){
 }]);
 ```
 
-start the app!
+all setup, let's start the app!
 ```
 myApp.build();
 
