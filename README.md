@@ -24,7 +24,7 @@ myApp.provider('logger',function(){
 create a service
 
 ```
-myApp.service('user', [function(){
+myApp.service('user', ['logger',function(logger){
     this.firstName = 'John';
     this.lastName = 'Franklin';
     logger('User Ready');
