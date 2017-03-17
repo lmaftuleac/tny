@@ -1,4 +1,4 @@
-# light-ng
+# light-ng (V.1.x.x)
 A light framework that uses the same injector sintax as Angular.js (or Require.js). It was inspired by Angular, and uses the same sintax mostly.
 
 ## Getting Started
