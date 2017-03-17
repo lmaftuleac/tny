@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="../index.js"></script>
+    </head>
+    <body>
+
+
+        <script>
+
+lightNg('logger')
+
+    .provider('logger',function(){
+        var logger;
+        if (console) {
+            logger = console.log || lightNg.noop;
+        }
+        return logger;
+    })
+
+    .factory('sayYeah',['logger',function(logger){
+        
+        return function(){
+            logger('yeaaaah!!!');
+        }
+
+    }])
+
+    .service('user', ['logger', 'sayYeah', function(logger, sayYeah){
+        this.firstName = 'John';
+        this.lastName = 'Franklin';
+        logger('User Ready');
+        sayYeah();
+    }]);
+
+
+lightNg('myApp')
+    .include('logger')
+    .run(['user',function(user){
+        var h1 = document.createElement('h1');
+        h1.innerHTML = 'hello '+user.firstName+' '+user.lastName;
+        document.body.append(h1);
+    }])
+
+    .build();
+
+        </script>
+    </body>
+</html>
