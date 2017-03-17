@@ -57,7 +57,7 @@ lightNg('myApp').build();
 
 ## Loading Modules
 
-It's always a good Idea to keep reusable modules, below is the same example, only this time I will separate my logger function in a separated module
+It's always a good Idea to keep reusable modules, below is the same example, only this time I will keep my logger function in a separated module
 
 ```
 lightNg('logger')
