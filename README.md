@@ -1,5 +1,10 @@
 # light-ng (V.2.x.x)
-A light framework that uses the same injector sintax as Angular.js (or Require.js). It was inspired by Angular, and uses the same sintax mostly.
+A very light framework that uses the same injector sintax as Angular.js (or Require.js). It was inspired by Angular, and uses the same sintax mostly.
+It can be used in browser and node environment, it's really tiny (2.2kb). Uses ecma 5
+
+## Why another framework?
+It's usefull to create tiny encapsulated apps. While Angular React or other frameworks require heavy libraries, 
+lightNg can keep a good structure of the code and be almost invisible to other libraries
 
 ## Version update
 This readme is for v.2.x.x for v.1 check [README-v.1.0.1](https://github.com/lmaftuleac/light-ng/blob/master/README-v1.0.1.md)
