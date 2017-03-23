@@ -87,7 +87,7 @@ lightNg('logger')
 ;
 ```
 Then use the `.include()` method. 
-NOTE : use `include()` BEFORE the `.build()` call
+*Note :* use `include()` BEFORE the `.build()` call
 
 ```
 lightNg('myApp')
@@ -134,7 +134,7 @@ ligtNg('myApp')
 A Factory is a function that gets executed after the `.build()` call. Similar to Angular's factory, the returned value serves as injectable value for other components.
 
 
-Note : A factory must be declared within injector array `.factory('factoryName',[function(){}]` even if the function doesn't have any arguments.
+*Note :* A factory must be declared within injector array `.factory('factoryName',[function(){}]` even if the function doesn't have any arguments.
 
 ```
 ligtNg('myApp')
@@ -158,7 +158,7 @@ ligtNg('myApp')
 A Service is a constructor function that gets executed after the `.build()` call. Similar to Angular's Service, it serves as a constructor for the output object 
 
 
-Note : A Service must be declared within injector array `.service('factoryName',[function(){}]` even if the function doesn't have any arguments.
+*Note :* A Service must be declared within injector array `.service('factoryName',[function(){}]` even if the function doesn't have any arguments.
 
 ```
 ligtNg('myApp')
@@ -181,7 +181,7 @@ ligtNg('myApp')
 A Controller is a function that can be executed only once after the `build()` call. It can be injected, but can be called only once
 
 
-Note : A Service must be declared within injector array `.service('factoryName',[function(){}]` even if the function doesn't have any arguments.
+*Note :* A Service must be declared within injector array `.service('factoryName',[function(){}]` even if the function doesn't have any arguments.
 
 ```
 ligtNg('myApp')
