@@ -31,20 +31,27 @@ lightNg('logger')
 
     }])
 
+lightNg('myApp')
+    .include('logger')
+
     .service('user', ['logger', 'sayYeah', function(logger, sayYeah){
         this.firstName = 'John';
         this.lastName = 'Franklin';
         logger('User Ready');
         sayYeah();
-    }]);
+    }])
 
-
-lightNg('myApp')
-    .include('logger')
-    .run(['user',function(user){
+    .controller('userController',['user', function(user){
         var h1 = document.createElement('h1');
         h1.innerHTML = 'hello '+user.firstName+' '+user.lastName;
         document.body.append(h1);
+    }])
+
+    .run(['userController','logger',function(userController, logger) {
+        //start user controller
+        logger('Start User Controller');
+        userController();
+        userController();
     }])
 
     .build();

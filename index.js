@@ -59,6 +59,19 @@
         _self.store[name] = operation.apply(this, injectables);
     }
 
+    lightNgModuleConstructor.prototype._initiateController = function(name, injector) {
+        var _self = this;
+        var injectables = _self._getInjectables(injector);
+        var operation = injector.pop();
+
+        _self.store[name] = function(){
+            operation.apply(this,injectables);
+            operation = function(){
+                throw "Controller "+ name+ " cannot be initiated more than once";
+            }
+        }
+    }
+
     //initiates a run instance
     lightNgModuleConstructor.prototype._initiateRunner = function(injector) {
         var _self = this;
@@ -104,6 +117,19 @@
             throw 'Provider constructor for "'+name+'" is not a function';
         }
         _self.store[name] = constructor();
+        return _self;
+    }
+
+    lightNgModuleConstructor.prototype.controller = function(name, injector) {
+        var _self = this;
+        if (!_self.running) {
+            _self.pending.push({
+                constructor : _self._initiateController,
+                arguments : [name, injector]
+            });
+        } else {
+            _self._initiateController(injector);
+        }
         return _self;
     }
 
