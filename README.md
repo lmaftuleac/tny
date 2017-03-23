@@ -120,7 +120,7 @@ Below will be the explenation of each component of the framework
 ### Provider
 A Provider is a function that gets executed as it's declared, and doesn't wait for `build()` to be called. Unlike Angular, it doesn't have injectors, meaning that you can't incude a provider in another provider. It's used as a pre-configuration function. lightNg will keep the responce of the function as the injectable value
 
-``
+```
 ligtNg('myApp')
     
     .provider('appConfig',function(){
@@ -129,14 +129,14 @@ ligtNg('myApp')
             path : '/lmaftuleac/light-ng'
         }
     })
-``
+```
 ### Factory
 A Factory is a function that gets executed after the `.build()` call. Similar to Angular's factory, the returned value serves as injectable value for other components.
 
 
 Note : A factory must be declared within injector array `.factory('factoryName',[function(){}]` even if the function doesn't have any arguments.
 
-``
+```
 ligtNg('myApp')
     
     .factory('appRoot',['appConfig'function(){
@@ -152,7 +152,7 @@ ligtNg('myApp')
             return appConfig.host + appConfig.path 
         };
     }])
-``
+```
 
 ### Service
 A Service is a constructor function that gets executed after the `.build()` call. Similar to Angular's Service, it serves as a constructor for the output object 
@@ -160,7 +160,7 @@ A Service is a constructor function that gets executed after the `.build()` call
 
 Note : A Service must be declared within injector array `.service('factoryName',[function(){}]` even if the function doesn't have any arguments.
 
-``
+```
 ligtNg('myApp')
     
     .service('user',[function(){
@@ -174,7 +174,7 @@ ligtNg('myApp')
 
     }])
 
-``
+```
 
 ### Controller
 
@@ -183,7 +183,7 @@ A Controller is a function that can be executed only once after the `build()` ca
 
 Note : A Service must be declared within injector array `.service('factoryName',[function(){}]` even if the function doesn't have any arguments.
 
-``
+```
 ligtNg('myApp')
     
     .controller('userController',['user',function(user){
@@ -196,14 +196,14 @@ ligtNg('myApp')
         userController();
         userController(); // will throw an error
     }]);
-``
+```
 
 ### Run
 
 Similar to Angular's `.run()` it's a function that get's executed immediately after the `.build()` call. There can be more than one `.run` functions, and will be 
 executed in order of their declaration. 
 
-``
+```
 ligtNg('myApp')
 
     .run([function(){
@@ -214,13 +214,13 @@ ligtNg('myApp')
         console.log('I will be called second');
         userController();
     }]);
-``
+```
 
 ### Build
 
 This function is to be called once all the modules are loaded. It's similar to Angular's `.bootstrap()`, only it doesn't have any arguments or parameters.
 
-``
+```
 ligtNg('myApp')
 
     .run([function(){
@@ -232,7 +232,7 @@ ligtNg('myApp')
     }]);
 
     .build();
-``
+```
 
 ### Include
 
