@@ -237,3 +237,15 @@ ligtNg('myApp')
 ### Include
 
 lightNg can have a modular structure. In order to load a module, use `lightNg('myApp').include('preBuiltModule')`;
+
+```
+ligtNg('myApp')
+
+    .include('Logger')
+
+    .run([function(){
+        //I can inject here components from Logger module
+    }])
+
+    .build();
+```
