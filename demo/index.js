@@ -1,17 +1,4 @@
-<!DOCTYPE html>
-<html class="no-js">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <script src="../index.js"></script>
-    </head>
-    <body>
-
-
-        <script>
+const Tynee = require('../src/index');
 
 Tynee('logger')
 
@@ -34,7 +21,7 @@ Tynee('logger')
 Tynee('myApp')
     .include('logger')
 
-    .service('user', ['logger', 'sayYeah', function(logger, sayYeah){
+    .service('user', ['logger', 'sayYeah', function(logger, sayYeah) {
         this.firstName = 'John';
         this.lastName = 'Franklin';
         logger('User Ready');
@@ -42,9 +29,9 @@ Tynee('myApp')
     }])
 
     .controller('userController',['user', function(user){
-        var h1 = document.createElement('h1');
-        h1.innerHTML = 'hello '+user.firstName+' '+user.lastName;
-        document.body.append(h1);
+
+        console.log('hello '+user.firstName+' '+user.lastName)
+        
     }])
 
     .run(['userController','logger',function(userController, logger) {
@@ -54,7 +41,3 @@ Tynee('myApp')
     }])
 
     .build();
-
-        </script>
-    </body>
-</html>

@@ -1,17 +1,14 @@
-'use strict';
+const gulp = require('gulp');
+const uglify = require('gulp-uglify');
+const rename = require('gulp-rename');
 
-//Plugins
-var gulp = require('gulp');
-var rename = require('gulp-rename');
-var uglify = require('gulp-uglify');
+// Define a task to minify JavaScript
+gulp.task('minify-js', () => {
+    return gulp.src('src/*.js') // Source files to minify
+      .pipe(uglify()) // Minify JavaScript
+      .pipe(rename('index.min.js')) // Rename the minified file
+      .pipe(gulp.dest('dist')); // Destination folder for minified files
+  });
 
-gulp.task('uglify',function() {
-    return gulp.src('index.js')
-        .pipe(uglify())
-        .pipe(rename({ extname: '.min.js' }))
-        .pipe(gulp.dest('./'));
-});
-
-gulp.task('min',['uglify']);
-
-
+// Define a default task
+gulp.task('default', gulp.series('minify-js'));

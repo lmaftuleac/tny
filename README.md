@@ -1,80 +1,74 @@
-# light-ng (V.2.x.x)
-A very light framework that uses the same injector sintax as Angular.js (or Require.js). It was inspired by Angular, and uses the same sintax mostly.
-It can be used in browsers and node environment, it's really tiny (2.2kb). Uses ecma 5
+# Tny - A tiny framework for tiny apps
 
-## Why another framework?
-It's usefull to create tiny encapsulated apps. While Angular React or other frameworks require heavy libraries, 
-lightNg can keep a good, modular structure of the code and be almost invisible to other libraries
-
-## Version update
-This readme is for v.2.x.x for v.1 check [README-v.1.0.1](https://github.com/lmaftuleac/light-ng/blob/master/README-v1.0.1.md)
+A tiny framework for tiny apps. It resembles Require.js and Angular.js - only it's much smaller and simpler.
+The idea behind Tny is to have small apps that can be easily encapsulated and reused. It's not a replacement for Angular or React, but rather a framework that can run alongside them and not interfere with their functionality. Although it was created for Browser mostly, it can be used in Node.js as well.
 
 ## Getting Started
 
-Similar to Angular, first you need to create a module 
+First you need to create a module 
 
 ```
-lightNg('myApp');
+Tny('demoApp');
 ```
 
-Then add a provider, let's say a conosle.log shortcut, but remember some IE browsers throw errors on console.log
+A `provider` is a function that returns any data that can be injected in other components. It's executed as it's declared, and doesn't wait for `build()` to be called. It doesn't have injectors, meaning that you can't incude a provider in another provider. It's used as a pre-configuration function. Tny will keep the responce of the function as the injectable value
 
 ```
-lightNg('myApp').provider('logger',function(){
+Tny('demoApp').provider('logger',function(){
     var logger;
     if (console) {
-        logger = console.log || lightNg.noop;
+        logger = console.log || Tny.noop;
     }
     return logger;
 });
 ```
 
-create a service
+A `service` is a constructor function that gets executed after the `.build()` call. Similar to Angular.js's Service, it serves as a constructor for the output object
 
 ```
-lightNg('myApp').service('user', ['logger',function(logger){
+Tny('demoApp').service('user', ['logger',function(logger){
     this.firstName = 'John';
     this.lastName = 'Franklin';
     logger('User Ready');
 }]);
 ```
 
-create a controller
+A `controller` is a function that can be executed only once after the `build()` call. It can be injected, but can be called only once.
 
 ```
-lightNg('myApp').controller('userController',['user', function(user){
+Tny('demoApp').controller('userController',['user', function(user){
     var h1 = document.createElement('h1');
     h1.innerHTML = 'hello '+user.firstName+' '+user.lastName;
     document.body.append(h1);
 }])
 ```
 
-a `run` function will get executed when the app is ready
+`run` functions will get executed when the app is ready. Think of it as the main starting poit of the app. Altho many `run` functions can be declared, they will be executed in order of their declaration.
 
 ```
-lightNg('myApp').run(['userController',function(userController){
+Tny('demoApp').run(['userController',function(userController){
     logger('Start User Controller');
     userController();
 }]);
 ```
 
-all setup, let's start the app!
+All setup, let's start the app by calling `build()`. Once `build()` is called, no more components can be added to the module.
 ```
-lightNg('myApp').build();
+Tny('demoApp').build();
 
 ```
 
 ## Loading Modules
 
-It's always a good Idea to keep reusable modules, below is the same example, only this time I will keep my logger function in a separated module
+It's always a good Idea to keep reusable modules. Tny can load modules from other files. Let's say we have a module called `logger.js` which looks like this:
 
 ```
-lightNg('logger')
+Tny('logger')
 
     .provider('logger',function(){
         var logger;
         if (console) {
-            logger = console.log || lightNg.noop;
+            logger = console.log || Tny.noop;
         }
         return logger;
     })
@@ -86,11 +80,11 @@ lightNg('logger')
     }])
 ;
 ```
-Then use the `.include()` method. 
-*Note :* use `include()` BEFORE the `.build()` call
+Use `include()` to load the module.
+*Note :* use `include()` BEFORE the `.build()` call, this allows dependency injection to access the components from the included module.
 
 ```
-lightNg('myApp')
+Tny('demoApp')
     .include('logger')
     
     .service('user', ['logger', 'sayYeah', function(logger, sayYeah){
@@ -112,42 +106,39 @@ lightNg('myApp')
 
     .build();
 ```
+___
 
-## Guide
-
-Below will be the explenation of each component of the framework
+## API Reference
 
 ### Provider
-A Provider is a function that gets executed as it's declared, and doesn't wait for `build()` to be called. Unlike Angular, it doesn't have injectors, meaning that you can't incude a provider in another provider. It's used as a pre-configuration function. lightNg will keep the responce of the function as the injectable value
+A Provider is a function that returns any data that can be injected in other components. It's executed as it's declared, and doesn't wait for `build()` to be called. It doesn't have injectors, meaning that you can't incude a provider in another provider. It's used as a pre-configuration function. Tny will keep the responce of the function as the injectable value. Providers are used mostly for configuration purposes.
 
 ```
-ligtNg('myApp')
+Tny('demoApp')
     
     .provider('appConfig',function(){
         return {
-            host : 'http://github.com',
-            path : '/lmaftuleac/light-ng'
+            host : 'localhost',
+            port : '8080'
         }
     })
 ```
 ### Factory
-A Factory is a function that gets executed after the `.build()` call. Similar to Angular's factory, the returned value serves as injectable value for other components.
 
-
-*Note :* A factory must be declared with injector array `.factory('factoryName',[function(){}]` even if the function doesn't have any arguments.
+A Provider is a function that returns any data that can be injected in other components. It has dependency injectors, meaning that you can include other providers in it. Unlike Providers, Factories are executed only after the `build()` call.
 
 ```
-ligtNg('myApp')
+Tny('demoApp')
     
-    .factory('appRoot',['appConfig'function(){
+    .factory('BaseUrl',[ 'appConfig', function(){
         return appConfig.host + appConfig.path;
     }])
 
 //or
 
-ligtNg('myApp')
+Tny('demoApp')
     
-    .factory('getAppRoot',['appConfig'function(){
+    .factory('getAppRoot',['appConfig', function(){
         return function(){ 
             return appConfig.host + appConfig.path 
         };
@@ -155,15 +146,15 @@ ligtNg('myApp')
 ```
 
 ### Service
-A Service is a constructor function that gets executed after the `.build()` call. Similar to Angular's Service, it serves as a constructor for the output object 
+A Service is a constructor function that gets executed after the `.build()` call. Similar to Angular's Service, it serves as a constructor for the output object. It has dependency injectors, meaning that you can include other providers in it. Services are executed only after the `build()` call.
 
 
-*Note :* A Service must be declared with injector array `.service('factoryName',[function(){}]` even if the function doesn't have any arguments.
+*Note :* As the arrow functions don't have their own `this` context, they can't be used as a service constructor. use a regular function instead of an arrow function.
 
 ```
-ligtNg('myApp')
+Tny('demoApp')
     
-    .service('user',[function(){
+    .service('user',[function() {
         
         this.firstName = 'John';
         this.lastName = 'Franklin';
@@ -180,11 +171,8 @@ ligtNg('myApp')
 
 A Controller is a function that can be executed only once after the `build()` call. It can be injected, but can be called only once
 
-
-*Note :* A Service must be declared with injector array `.service('factoryName',[function(){}]` even if the function doesn't have any arguments.
-
 ```
-ligtNg('myApp')
+Tny('demoApp')
     
     .controller('userController',['user',function(user){
         user.firstName = 'Johnny';
@@ -200,17 +188,16 @@ ligtNg('myApp')
 
 ### Run
 
-Similar to Angular's `.run()` it's a function that get's executed immediately after the `.build()` call. There can be more than one `.run` functions, and will be 
-executed in order of their declaration. 
+`run` functions will get executed when the app is ready. Think of it as the main starting poit of the app. Altho many `run` functions can be declared, they will be executed in order of their declaration.
 
 ```
-ligtNg('myApp')
+Tny('demoApp')
 
-    .run([function(){
+    .run([() => {
         console.log('I will be called first');
     }])    
 
-    .run(['userController',function(){
+    .run(['userController',() => {
         console.log('I will be called second');
         userController();
     }]);
@@ -221,7 +208,7 @@ ligtNg('myApp')
 This function is to be called once all the modules are loaded. It's similar to Angular's `.bootstrap()`, only it doesn't have any arguments or parameters.
 
 ```
-ligtNg('myApp')
+Tny('demoApp')
 
     .run([function(){
         console.log('I will be called first');
@@ -236,10 +223,10 @@ ligtNg('myApp')
 
 ### Include
 
-lightNg can have a modular structure. In order to load a module, use `lightNg('myApp').include('preBuiltModule')`;
+Tny can load modules. A module can be included using .include() method. Use `include()` BEFORE the `.build()` call, this allows dependency injection to access the components from the included module.
 
 ```
-ligtNg('myApp')
+Tny('demoApp')
 
     .include('Logger')
 
