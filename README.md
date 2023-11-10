@@ -146,10 +146,14 @@ Tny('demoApp')
 ```
 
 ### Service
+* DEPRECATED *
+
 A Service is a constructor function that gets executed after the `.build()` call. Similar to Angular's Service, it serves as a constructor for the output object. It has dependency injectors, meaning that you can include other providers in it. Services are executed only after the `build()` call.
 
 
 *Note :* As the arrow functions don't have their own `this` context, they can't be used as a service constructor. use a regular function instead of an arrow function.
+
+
 
 ```
 Tny('demoApp')
